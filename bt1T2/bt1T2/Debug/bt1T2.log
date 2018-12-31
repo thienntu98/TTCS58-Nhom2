@@ -1,0 +1,3 @@
+﻿  bt1T2.cpp
+f:\thực tập cơ sở\bt1t2\bt1t2\bt1t2.cpp(18): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  bt1T2.vcxproj -> F:\thực tập cơ sở\bt1T2\Debug\bt1T2.exe
