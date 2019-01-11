@@ -6,6 +6,7 @@ using namespace std;
 #define FALSE  0 
 #define MAX  10000 
 
+ofstream fi("input.txt");
 ifstream f("input.txt");
 ofstream file("output.txt");
 int a[100][100];//ma tran trong so cua do thi
@@ -15,6 +16,23 @@ int sc;//so canh cua cay khung nho nhat,, se bang n - 1
 int w;//do dai cua cay khung nho nhat
 int chuaxet[100];//mang danh dau cac dinh da them vao cay khung nho nhat
 int cck[100][3];//danh sach cac canh cua cay khung nho nhat
+void TaoDoThi(){
+	int dinh, canh;
+	int d, c, gt;
+	cout<<"Nhap vao so dinh: ";
+	cin>>dinh;
+	fi<<dinh<<" ";
+	cout<<"Nhap vao so canh: ";
+	cin>>canh;
+	fi<<canh<<endl;
+	cout<<"Nhap danh sach cac canh vd: 1 5 32 voi 1: dinh xuat phat, 2: dinh ket thuc, 32: gia tri cua canh."<<endl;
+	for(int i = 0; i < canh; i++){
+		do{
+			cin>>d>>c>>gt;
+		}while(d <= 0 || d > dinh || c <= 0 || c > dinh || d == c);
+		fi<<d<<" "<<c<<" "<<gt<<endl;
+	}
+}
 void Nhap(){
 	 int i, j, k;
 	 f>>n>>m;
@@ -87,11 +105,12 @@ void XuatFile(){
 		}
 }
 int main(){
- Nhap(); 
- PRIM();
- XuatFile();
- cout<<"Xuat ket qua ra file thanh cong!!!";
- f.close();
- file.close();
- getch();
+	TaoDoThi();
+	Nhap(); 
+ 	PRIM();
+ 	XuatFile();
+ 	cout<<"Xuat ket qua ra file thanh cong!!!";
+ 	f.close();
+ 	file.close();
+ 	getch();
 }
