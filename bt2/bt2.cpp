@@ -48,42 +48,75 @@ void Nhap(date &x){
 }
 //Tinh toan va nhap tat ca cac ngay trong thang vao mang? month[42]
 void NhapLich(date x){
-	    switch(x.m)
+	switch(x.m)
+    {
+        case 1: ngaymax=31; ngaydu=0; break;
+        case 2: if(nhuan(x)) ngaymax=29; else ngaymax=28; ngaydu=1;  break;
+        case 3: ngaymax=31; ngaydu=-1+nhuan(x); break;
+        case 4: ngaymax=30; ngaydu=nhuan(x); break;
+        case 5: ngaymax=31; ngaydu=nhuan(x); break;
+        case 6: ngaymax=30; ngaydu=1+nhuan(x); break;
+        case 7: ngaymax=31; ngaydu=1+nhuan(x); break;
+        case 8: ngaymax=31; ngaydu=2+nhuan(x); break;
+        case 9: ngaymax=30; ngaydu=3+nhuan(x); break;
+        case 10: ngaymax=31; ngaydu=3+nhuan(x); break;
+        case 11: ngaymax=30; ngaydu=4+nhuan(x); break;
+        case 12: ngaymax=31; ngaydu=4+nhuan(x); break;
+    }
+    x.a=ngaydu;
+    x.d=1; //Gan ngay la ngay mung 1
+    thu=TinhNgay(x)%7; //de tinh thu cua ngay dau tien cua thang 1: thu 2 2: thu3 .... 7:chu nhat.
+    //Gan tat ca ngay trong thang vao mang 
+    for(i=0;i<5;i++)// 5 la so hang de in ra lich
+    {
+        for(j=0;j<7;j++)// moi hang bao gom 7 ngay
         {
-            case 1: ngaymax=31; ngaydu=0; break;
-            case 2: if(nhuan(x)) ngaymax=29; else ngaymax=28; ngaydu=1;  break;
-            case 3: ngaymax=31; ngaydu=-1+nhuan(x); break;
-            case 4: ngaymax=30; ngaydu=nhuan(x); break;
-            case 5: ngaymax=31; ngaydu=nhuan(x); break;
-            case 6: ngaymax=30; ngaydu=1+nhuan(x); break;
-            case 7: ngaymax=31; ngaydu=1+nhuan(x); break;
-            case 8: ngaymax=31; ngaydu=2+nhuan(x); break;
-            case 9: ngaymax=30; ngaydu=3+nhuan(x); break;
-            case 10: ngaymax=31; ngaydu=3+nhuan(x); break;
-            case 11: ngaymax=30; ngaydu=4+nhuan(x); break;
-            case 12: ngaymax=31; ngaydu=4+nhuan(x); break;
+            if(7*i+j+1<=ngaymax) 
+			month[7*i+j+thu]=7*i+j+1;
         }
-        x.a=ngaydu;
-        x.d=1; //Gan ngay la ngay mung 1
-        thu=TinhNgay(x)%7; //de tinh thu cua ngay dau tien cua thang 0: thu 2 1: thu3 .... 6:chu nhat.
-       	//Gan tat ca ngay trong thang vao mang 
-        for(i=0;i<5;i++)// 5 la so hang de in ra lich
-        {
-            for(j=0;j<7;j++)// moi hang bao gom 7 ngay
-            {
-                if(7*i+j+1<=ngaymax) 
-					month[7*i+j+thu]=7*i+j+1;
-            }
-        }
-        for(i=0;i<thu;i++)
-            month[i]=32; //Gan gia tri tam thoi bieu thi nhung ngay ko ton tai
-        for(i=ngaymax+thu;i<42;i++)
-            month[i]=32; //Gan gia tri tam thoi bieu thi nhung ngay ko ton tai
-		getch();
+    }
+    for(i=0;i<thu;i++)
+        month[i]=32; //Gan gia tri tam thoi bieu thi nhung ngay ko ton tai
+    for(i=ngaymax+thu;i<42;i++)
+        month[i]=32; //Gan gia tri tam thoi bieu thi nhung ngay ko ton tai
 }
+
+void TimNgay(date x){
+	int ngay, thutk;
+	do{
+		cout<<"\nNhap ngay muon tim: Ngay ";
+		cin>>ngay;
+	}while(ngay <= 0 || ngay > ngaymax);
+	thutk = (ngay+thu-1)%7;
+	textcolor(4);
+	switch(thutk){
+		case 1:
+			cout<<"\nThu hai "<<ngay<<"/"<<x.m<<"/"<<x.y<<"\n";
+			break;
+		case 2:
+			cout<<"\nThu ba "<<ngay<<"/"<<x.m<<"/"<<x.y<<"\n";
+			break;
+		case 3:
+			cout<<"\nThu tu "<<ngay<<"/"<<x.m<<"/"<<x.y<<"\n";
+			break;
+		case 4:
+			cout<<"\nThu Nam "<<ngay<<"/"<<x.m<<"/"<<x.y<<"\n";
+			break;
+		case 5:
+			cout<<"\nThu sau "<<ngay<<"/"<<x.m<<"/"<<x.y<<"\n";
+			break;
+		case 6:
+			cout<<"\nThu bay "<<ngay<<"/"<<x.m<<"/"<<x.y<<"\n";
+			break;
+		case 0:
+			cout<<"\nChu nhat "<<ngay<<"/"<<x.m<<"/"<<x.y<<"\n";
+			break;
+	}
+	textcolor(15);
+}
+
 //Xuat lich ra man hinh
 void Xuat(date x){
-	system("cls");
     cout<<"\n\n\t\t\t------------------------------------------------------\n";
 	cout<<"\t\t\t                       "<<x.m<<" , "<<x.y<<"\n";
     cout<<"\t\t\t------------------------------------------------------\n";
@@ -109,7 +142,7 @@ void Xuat(date x){
     textcolor(15);
 }
 
-date TangThang(date x){
+date TangThang(date &x){
 	x.m += 1;
 	if(x.m>12)
 	{
@@ -120,7 +153,7 @@ date TangThang(date x){
 	return x;
 }
 
-date GiamThang(date x){
+date GiamThang(date &x){
 	x.m -= 1;
 	if(x.m < 1)
 	{
@@ -168,6 +201,7 @@ int  main()
 		system("cls");
 		NhapLich(x);
 		Xuat(x);
+		TimNgay(x);
 		ChuThich();
 		PhimLenh();
 	}while(key != '2');
